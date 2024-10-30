@@ -17,6 +17,7 @@ var (
 	errBadPassword = errors.New("permission denied") // 自定义错误信息，表示权限被拒绝
 	serverVersions = []string{
 		// 不同的SSH服务器版本信息，伪装成常见的SSH版本
+		"SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u3",
 		"SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.3",
 		"SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u3",
 		"SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.10",
@@ -25,7 +26,6 @@ var (
 		"SSH-2.0-OpenSSH_8.4p1 Debian-2~bpo10+1",
 		"SSH-2.0-OpenSSH_8.4p1 Debian-5+deb11u1",
 		"SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.6",
-		"SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u3",
 	}
 )
 
@@ -48,7 +48,7 @@ func main() {
 	serverConfig := &ssh.ServerConfig{
 		MaxAuthTries:     5,                     // 设置最大尝试次数为5次
 		PasswordCallback: passwordCallback,      // 设置密码回调函数
-		ServerVersion:    serverVersions[9],     // 设置SSH服务器版本信息
+		ServerVersion:    serverVersions[0],     // 设置SSH服务器版本信息
 	}
 
 	// 生成2048位的RSA密钥

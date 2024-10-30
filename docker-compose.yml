@@ -1,9 +1,16 @@
 services:
   fakessh:
     image: honeok/fakessh
-    restart: unless-stopped
-    network_mode: host
     container_name: fakessh
+    restart: unless-stopped
+    ports:
+      - 22:22
     command: /log
     volumes:
-      - ./fakessh:/log
+      - ./log:/log
+    networks:
+      - fakessh
+
+networks:
+  fakessh:
+    driver: bridge

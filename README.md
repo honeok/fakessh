@@ -1,30 +1,49 @@
 # FakeSSH
 
-A dockerized honeypot SSH server written in Go to log login attempts.
-Password authentications always fail so no terminal access is given to the attacker.
+这是一个使用 Go 语言编写的 Docker 化蜜罐 SSH 服务器，旨在记录登录尝试的情况。
+所有密码验证都会失败，因此攻击者无法获得终端访问权限。
 
-[![](http://dockeri.co/image/fffaraz/fakessh)](https://hub.docker.com/r/fffaraz/fakessh)
+[![](https://dockeri.co/image/honeok/fakessh)](https://hub.docker.com/r/honeok/fakessh)
 
-## Quick Start
+## 快速入门
 
-```
+```shell
 go install github.com/fffaraz/fakessh@latest
 sudo setcap 'cap_net_bind_service=+ep' ~/go/bin/fakessh
 fakessh [optional-log-directory]
 ```
-
 OR
-
+```shell
+docker run -it --rm -p 22:22 honeok/fakessh
 ```
-docker run -it --rm -p 22:22 fffaraz/fakessh
-```
-
 OR
-
-```
-docker run -d --restart=always -p 22:22 --name fakessh fffaraz/fakessh
+```shell
+docker run -d --restart=unless-stopped -p 22:22 --name fakessh honeok/fakessh
 docker logs -f fakessh
 ```
+OR
+```yaml
+services:
+  fakessh:
+    image: honeok/fakessh
+    container_name: fakessh
+    restart: unless-stopped
+    ports:
+      - 22:22
+    command: /log
+    volumes:
+      - ./log:/log
+    networks:
+      - fakessh
+
+networks:
+  fakessh:
+    driver: bridge
+```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=honeok/fakessh&type=Date)](https://star-history.com/#honeok/fakessh&Date)
 
 ### See also
 

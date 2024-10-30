@@ -4,6 +4,7 @@
 所有密码验证都会失败，因此攻击者无法获得终端访问权限。
 
 [![Build Status](https://github.com/honeok/fakessh/actions/workflows/build-image.yml/badge.svg)](https://github.com/honeok/fakessh/actions/workflows/build-image.yml/badge.svg)
+
 [![](https://dockeri.co/image/honeok/fakessh)](https://hub.docker.com/r/honeok/fakessh)
 
 ## 快速入门

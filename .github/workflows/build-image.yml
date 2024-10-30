@@ -34,6 +34,6 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            honeok/fakessh:latest
             honeok/fakessh:${{ env.DATE }}
+            honeok/fakessh:latest
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64

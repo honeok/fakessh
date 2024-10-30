@@ -3,9 +3,9 @@
 这是一个使用 Go 语言编写的 Docker 化蜜罐 SSH 服务器，旨在记录登录尝试的情况。
 所有密码验证都会失败，因此攻击者无法获得终端访问权限。
 
-[![Build Status](https://github.com/honeok/fakessh/actions/workflows/build-image.yml/badge.svg)](https://github.com/honeok/fakessh/actions/workflows/build-image.yml/badge.svg)
-
 [![](https://dockeri.co/image/honeok/fakessh)](https://hub.docker.com/r/honeok/fakessh)
+
+[![Build Status](https://github.com/honeok/fakessh/actions/workflows/build-image.yml/badge.svg)](https://github.com/honeok/fakessh/actions/workflows/build-image.yml/badge.svg)
 
 ## 快速入门
 

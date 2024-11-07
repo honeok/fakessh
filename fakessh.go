@@ -17,7 +17,7 @@ var (
 	errBadPassword = errors.New("permission denied") // 自定义错误信息，表示权限被拒绝
 	serverVersions = []string{
 		// 不同的SSH服务器版本信息，伪装成常见的SSH版本
-		"SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u3",
+		// "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u3",
 		"SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.3",
 		"SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u3",
 		"SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.10",

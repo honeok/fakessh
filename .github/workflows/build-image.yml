@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/**'
+      - 'fakessh.go'
 
 jobs:
   build:

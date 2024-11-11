@@ -10,12 +10,6 @@
 ## 快速入门
 
 ```shell
-go install github.com/fffaraz/fakessh@latest
-sudo setcap 'cap_net_bind_service=+ep' ~/go/bin/fakessh
-fakessh [optional-log-directory]
-```
-OR
-```shell
 docker run -it --rm -p 22:22 honeok/fakessh
 ```
 OR

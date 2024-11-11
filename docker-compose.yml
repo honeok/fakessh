@@ -1,6 +1,6 @@
 services:
   fakessh:
-    image: honeok/fakessh
+    image: honeok/fakessh:latest
     container_name: fakessh
     restart: unless-stopped
     ports:

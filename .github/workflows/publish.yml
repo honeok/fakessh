@@ -1,10 +1,9 @@
-name: Publish FakeSSH Image
+name: CI
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/**'
       - 'fakessh.go'
 
 jobs:

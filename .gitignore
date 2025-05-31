@@ -1,0 +1,20 @@
+# binaries
+*.out
+*.test
+
+# output folders
+/bin/
+/build/
+/dist/
+
+# coverage files
+coverage.out
+
+# ides
+.idea/
+.vscode/
+
+*.log
+
+# program itself
+./fakessh

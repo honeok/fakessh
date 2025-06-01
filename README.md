@@ -1,4 +1,4 @@
-# FakeSSH
+## FakeSSH
 
 <p align="center">
 <img src="https://img.shields.io/github/license/honeok/fakessh.svg?style=flat" alt="License" />
@@ -12,7 +12,7 @@ Password authentication always fails, so the attacker cannot gain terminal acces
 
 [![](https://dockerico.blankenship.io/image/honeok/fakessh)](https://hub.docker.com/r/honeok/fakessh)
 
-## Quick Start
+### Quick Start
 
 ```shell
 docker run -it --rm -p 22:22 --name fakessh honeok/fakessh
@@ -23,7 +23,7 @@ docker run -d --restart=unless-stopped -p 22:22 --name fakessh honeok/fakessh
 docker logs -f fakessh
 ```
 
-## Local build
+### Local build
 
 ```shell
 git clone https://github.com/honeok/fakessh.git

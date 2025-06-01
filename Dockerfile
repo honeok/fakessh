@@ -15,7 +15,7 @@
 # limitations under the License.
 
 FROM golang:1.24-alpine AS builder
-WORKDIR /go/src/github.com/havario/fakessh
+WORKDIR /go/src/github.com/honeok/fakessh
 COPY . .
 ENV CGO_ENABLED=0
 RUN go build -v -trimpath -ldflags="-s -w -buildid=" -o /go/bin/fakessh fakessh.go

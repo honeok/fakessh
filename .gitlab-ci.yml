@@ -1,0 +1,77 @@
+---
+workflow:
+  rules:
+    - if: '$CI_SERVER_HOST == "gitlab.com"'
+      when: always
+    - when: never
+
+stages:
+  - test
+  - versioning
+  - build
+
+test:
+  stage: test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" && ($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web")'
+      when: always
+    - when: never
+  image: golang:1.24-alpine
+  script:
+    - go mod tidy
+    - go test -v ./...
+  dependencies: []
+
+versioning:
+  stage: versioning
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" && ($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web")'
+      when: always
+    - when: never
+  image: ubuntu:latest
+  script:
+    - echo "Install dependencies"
+    - |
+      apt-get update
+      apt-get install -y -q bash wget jq
+
+    - echo "Bump version"
+    - |
+      FAKESSH_CVER="$(wget -qO- --tries=5 "https://hub.docker.com/v2/repositories/$DOCKERHUB_USERNAME/fakessh/tags" | jq -r ".results // [] | .[].name" | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" | sort -Vr | head -n1 || true)"
+      if [ -z "$FAKESSH_CVER" ]; then
+        FAKESSH_LVER="0.0.1"
+      else
+        FAKESSH_LVER="$(IFS=. read a b c <<< "$FAKESSH_CVER" && echo "$a.$b.$((c+1))")"
+      fi
+      echo "FAKESSH_LVER=$FAKESSH_LVER" >> fakessh.env
+  artifacts:
+    reports:
+      dotenv: fakessh.env
+
+build:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" && ($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web")'
+      when: always
+    - when: never
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    IMAGE_NAME: $DOCKERHUB_USERNAME/$CI_PROJECT_NAME
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375
+  script:
+    - echo "Install dependencies"
+    - |
+      apk update
+      apk add --no-cache bash
+
+    - echo "Build and push fakessh image"
+    - |
+      echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+      docker buildx create --name mybuilder --use || docker buildx use mybuilder
+      docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x \
+      -t "$IMAGE_NAME:$FAKESSH_LVER" -t "$IMAGE_NAME:latest" --push .
+  dependencies:
+    - versioning
